@@ -6,6 +6,8 @@
 	
 	//var_dump($_POST);
 	
+	//MUUTUJAD
+	$signupEmail = "";
 	$signupEmailError = "";
 	
 	//kas keegi vajutas nuppu ja see on olemas
@@ -18,6 +20,9 @@
 			
 			//on tühi
 			$signupEmailError="Väli on kohustuslik";
+		} else {
+			
+			$signupEmail = $_POST["signupEmail"];
 		}
 	}
 	
@@ -86,6 +91,19 @@
 		}
 	}
 
+	//vaikimisi väärtus
+	$gender = "";
+	
+	if (isset ($_POST["gender"])) {
+		if (empty ($_POST["gender"])) {
+			$genderError = "* Väli on kohustuslik!";
+		} else {
+			$gender = $_POST["gender"];
+		}
+		
+	} 
+
+	
 
 ?>
 
@@ -119,7 +137,7 @@
 
 		<form method="POST">
 		
-			<input name="signupEmail" placeholder="e-mail" type="email"> <?php echo $signupEmailError; ?>
+			<input name="signupEmail" placeholder="e-mail" value="<?=$signupEmail;?>" type="email"> <?php echo $signupEmailError; ?>
 			
 			<br><br>
 			
@@ -158,6 +176,31 @@
 			<input type="submit" value="Sisesta">
 			
 		</form>
-	
+
+		<br><br>
+				
+		<?php if ($gender == "female") { ?>
+			<input type="radio" name="gender" value="female" checked> female<br>
+		<?php } else { ?>
+			<input type="radio" name="gender" value="female" > female<br>
+		<?php } ?>
+
+		
+		<?php if ($gender == "male") { ?>
+			<input type="radio" name="gender" value="male" checked> male<br>
+		<?php } else { ?>
+			<input type="radio" name="gender" value="male" > male<br>
+		<?php } ?>
+		
+		
+		<?php if ($gender == "other") { ?>
+			<input type="radio" name="gender" value="other" checked> other<br>
+		<?php } else { ?>
+			<input type="radio" name="gender" value="other" > other<br>
+		<?php } ?>
+		
+		<input type="submit" value="Loo kasutaja">
+
+		
 	</body>
 </html> 
