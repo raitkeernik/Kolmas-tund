@@ -1,7 +1,7 @@
 <?php
 
 	require("../../config.php");
-	
+	require("functions.php");
 
 	//var_dump($_GET);
 	
@@ -125,34 +125,20 @@
 		
 		echo $password."<br>";
 		
-		//loon ühenduse andmebaasi
-		$database = "if16_raitkeer";
-		
-		$mysqli = new mysqli($serverHost, $serverUsername, $serverPassword, $database);
-		
-		$stmt = $mysqli->prepare("INSERT INTO user_sample (email, password) VALUE (?, ?)");
-		
-		//asendan küsimärgid
-		//iga märgi kohta tuleb lisada üks täht - mis tüüpi muutuja on
-		// s-string
-		// i-int
-		// d-double
-		$stmt->bind_param("ss", $signupEmail, $password);
-		
-		//aitab leida viga eelmises käsus
-		echo $mysqli->error;
-		
-		if ( $stmt->execute() ) {
-			echo "õnnestus";
-					
-		} else {
-			echo "ERROR ".$stmt->error;
-			
-		}
-		
-		
+		signup($signupEmail, $password);
 		
 	}
+	
+	if ( isset($_POST["loginEmail"]) &&
+		 isset($_POST["loginPassword"]) &&
+		 !empty($_POST["loginEmail"]) &&
+		 !empty($_POST["loginPassword"])
+	) {
+		login($_POST["loginEmail"], $_POST["loginPassword"]);
+	
+	}
+	
+	
 	
 
 ?>
