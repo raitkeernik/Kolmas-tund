@@ -3,6 +3,12 @@
 	require("../../config.php");
 	require("functions.php");
 
+	if (isset($_SESSION["userId"])) {
+		
+		header("Location: data.php");
+	}	
+	
+	
 	//var_dump($_GET);
 	
 	//echo"<br>";
@@ -129,12 +135,14 @@
 		
 	}
 	
+	$notice = "";
+	
 	if ( isset($_POST["loginEmail"]) &&
 		 isset($_POST["loginPassword"]) &&
 		 !empty($_POST["loginEmail"]) &&
 		 !empty($_POST["loginPassword"])
 	) {
-		login($_POST["loginEmail"], $_POST["loginPassword"]);
+		$notice = login($_POST["loginEmail"], $_POST["loginPassword"]);
 	
 	}
 	
@@ -154,7 +162,7 @@
 	<body>
 
 		<h1>Logi sisse</h1>
-
+		<p style="color:red;" ><?=$notice;?></p>
 		<form method="POST">
 		
 			<input name="loginEmail" placeholder="e-mail" type="email">
@@ -181,13 +189,7 @@
 			
 			<br><br>
 			
-			<input type="submit" value="Loo kasutaja">
-		
-		</form>
-	
-		<h1>Sisesta oma nimi</h1>
-
-		<form method="POST">
+		<h3>Sisesta oma nimi</h3>
 		
 			<input name="firstName" placeholder="First Name" type="text"> <?php echo $firstNameError; ?>
 			
@@ -196,14 +198,8 @@
 			<input name="surname" placeholder="Surname" type="text"> <?php echo $surnameError; ?>
 			
 			<br><br>
-			
-			<input type="submit" value="Sisesta">
-		
-		</form>
 	
-		<h1>Sisesta oma asukoht</h1>
-		
-		<form method="POST">
+		<h3>Sisesta oma asukoht</h3>
 			
 			<input name="address" placeholder="address" type="text"> <?php echo $addressError; ?>
 			
