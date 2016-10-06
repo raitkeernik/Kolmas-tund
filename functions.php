@@ -1,5 +1,7 @@
 <?php
 
+	require("../../config.php");
+
 	//see fail peab olema seotud kõigiga kus tahame sessiooni kasutada
 	//saame nüüd kasutada $_SESSION muutujat
 	session_start();
@@ -80,13 +82,67 @@
 			$notice = "Sellise emailiga ".$email." kasutajat ei ole olemas";
 		}
 		
+		$stmt->close();
+		$mysqli->close();
+		
 		return $notice;
 		
 	}
 
 
+	function colorEvent($vanus, $color) {
 
+		$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
+		
+		$stmt = $mysqli->prepare("INSERT INTO identTable (age, color) VALUE (?, ?)");
+		echo $mysqli->error;
+		//asendan küsimärgid
+		//iga märgi kohta tuleb lisada üks täht - mis tüüpi muutuja on
+		// s-string
+		// i-int
+		// d-double
+		$stmt->bind_param("is",$vanus, $color);
+		
+		//aitab leida viga eelmises käsus
+		
+		
+		if ( $stmt->execute() ) {
+			echo "õnnestus";
+					
+		} else {
+			echo "ERROR ".$stmt->error;
+		}	
+	}
 
+	function getAllPeople () {
+		
+		$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
+
+		$stmt = $mysqli->prepare("SELECT id, age, color FROM identTable");
+		
+		$stmt->bind_result($id, $age, $color);
+		
+		$stmt->execute();
+		
+		$results = array();
+		
+		//tsükli sisu tehakse nii mitu korda, mitu rida SQL lausega tuleb
+		while ($stmt->fetch()) {
+			
+			$human = new StdClass();
+			$human->id = $id;
+			$human->age = $age;
+			$human->color = $color;
+			
+			//echo $color."<br>";
+			
+			array_push($results, $human);
+
+		}
+		
+		return $results;
+		
+	}
 
 
 

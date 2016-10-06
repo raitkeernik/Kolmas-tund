@@ -1,6 +1,6 @@
 <?php
 
-	require("../../config.php");
+
 	require("functions.php");
 
 	if (isset($_SESSION["userId"])) {
@@ -204,35 +204,30 @@
 			<input name="address" placeholder="address" type="text"> <?php echo $addressError; ?>
 			
 			<br><br>
+					
+			<?php if ($gender == "female") { ?>
+				<input type="radio" name="gender" value="female" checked> female<br>
+			<?php } else { ?>
+				<input type="radio" name="gender" value="female" > female<br>
+			<?php } ?>
+
 			
-			<input type="submit" value="Sisesta">
+			<?php if ($gender == "male") { ?>
+				<input type="radio" name="gender" value="male" checked> male<br>
+			<?php } else { ?>
+				<input type="radio" name="gender" value="male" > male<br>
+			<?php } ?>
 			
+			
+			<?php if ($gender == "other") { ?>
+				<input type="radio" name="gender" value="other" checked> other<br>
+			<?php } else { ?>
+				<input type="radio" name="gender" value="other" > other<br>
+			<?php } ?>
+			
+			<input type="submit" value="Loo kasutaja">
+
 		</form>
-
-		<br><br>
-				
-		<?php if ($gender == "female") { ?>
-			<input type="radio" name="gender" value="female" checked> female<br>
-		<?php } else { ?>
-			<input type="radio" name="gender" value="female" > female<br>
-		<?php } ?>
-
-		
-		<?php if ($gender == "male") { ?>
-			<input type="radio" name="gender" value="male" checked> male<br>
-		<?php } else { ?>
-			<input type="radio" name="gender" value="male" > male<br>
-		<?php } ?>
-		
-		
-		<?php if ($gender == "other") { ?>
-			<input type="radio" name="gender" value="other" checked> other<br>
-		<?php } else { ?>
-			<input type="radio" name="gender" value="other" > other<br>
-		<?php } ?>
-		
-		<input type="submit" value="Loo kasutaja">
-
-		
+			
 	</body>
 </html> 
